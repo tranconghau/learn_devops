@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  stages {
+    parallel {
+     stage('Test') {
+      steps {
+        sh '''
+           ifconfig
+           sleep 15
+           echo "Elapsed 15s"
+        '''
+      }
+     }
+     stage('Test 1') {
+      steps {
+        sh '''
+          echo "Hello"
+          sleep 20
+          echo "Elasped 20s"
+        '''
+      }
+     }
+    }
+  }
+}
