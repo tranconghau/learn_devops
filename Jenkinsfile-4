@@ -1,8 +1,9 @@
 pipeline {
   agent any
   stages {
+   stage('Run test') { 
     parallel {
-     stage('Test') {
+     stage('Test 0') {
       steps {
         sh '''
            ifconfig
@@ -10,7 +11,7 @@ pipeline {
            echo "Elapsed 15s"
         '''
       }
-     }
+     } // Stage test 0
      stage('Test 1') {
       steps {
         sh '''
@@ -19,7 +20,8 @@ pipeline {
           echo "Elasped 20s"
         '''
       }
-     }
-    }
-  }
+     } // state Test 1
+    } //parallel
+   } // stage run test
+  } // stages
 }
