@@ -39,13 +39,13 @@ pipeline {
       }
      } // state Test 1
     } //parallel
-   } // stage run test
-   post {
-    always {
-      sh '''
-        echo "The last post"
-      '''
+    post {
+      always {
+        sh '''
+          echo "The last post"
+        '''
+      }
     }
-   }
+   } // stage run test
   } // stages
 }
