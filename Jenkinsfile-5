@@ -5,26 +5,29 @@ pipeline {
         parallelsAlwaysFailFast()
     }
     stages {
-        parallel {
-            stage('1') {
-                steps {
-                    script {
-                        step([$class: 'WsCleanup'])
-                    }
+        stage('1') {
+            steps {
+                script {
+                    step([$class: 'WsCleanup'])
                 }
             }
-            stage('2 AND 3') {
+        }
+        stage('2 AND 3') {
             steps {
                 script {
                     parallel getWrappedStages()
                 }
             }
+            post {
+                always {
+                    sh "echo post"
+                }
             }
-            stage('4') {
-                steps {
-                    script {
-                        sh "echo end"
-                    }
+        }
+        stage('4') {
+            steps {
+                script {
+                    sh "echo end"
                 }
             }
         }
