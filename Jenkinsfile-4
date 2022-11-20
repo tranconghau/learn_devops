@@ -11,7 +11,14 @@ pipeline {
            echo "Elapsed 15s"
         '''
       }
+      post {
+        sh '''
+           echo "Post stage 0----------start"
+           echo "Post stage 0----------end"
+        '''
+      }
      } // Stage test 0
+
      stage('Test 1') {
       steps {
         sh '''
@@ -20,8 +27,19 @@ pipeline {
           echo "Elasped 20s"
         '''
       }
+      post {
+        sh '''
+           echo "Post stage 1----------start"
+           echo "Post stage 1----------end"
+        '''
+      }
      } // state Test 1
     } //parallel
    } // stage run test
+   post {
+    sh '''
+      echo "The last post"
+    '''
+   }
   } // stages
 }
