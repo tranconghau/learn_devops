@@ -7,6 +7,10 @@ pipeline {
       steps {
         sh '''
            ifconfig
+           mkdir -p /tmp/test/data
+           touch /tmp/test/data/data1.txt
+           echo "Hello, world!" >> /tmp/test/data/data1.txt
+           echo "Add: 'Hello, world!' into /tmp/test/data/data1.txt"
            sleep 15
            echo "Elapsed 15s"
         '''
@@ -15,6 +19,7 @@ pipeline {
         always {
          sh '''
           echo "Post stage 0----------start"
+          cat /tmp/test/data/data1.txt
           echo "Post stage 0----------end"
          ''' 
         }
@@ -27,12 +32,15 @@ pipeline {
           echo "Hello"
           sleep 20
           echo "Elasped 20s"
+          echo "Hau debug" >> /tmp/test/data/data1.txt
+          echo "Add: 'Hau debug' into /tmp/test/data/data1.txt"
         '''
       }
       post {
         always {
           sh '''
             echo "Post stage 1----------start"
+            cat /tmp/test/data/data1.txt
             echo "Post stage 1----------end"
           '''
         }
@@ -42,7 +50,10 @@ pipeline {
     post {
       always {
         sh '''
-          echo "The last post"
+          echo "The last post----start"
+          cat /tmp/test/data/data1.txt >> /tmp/test/data/data2.txt
+          cat /tmp/test/data/data2.txt
+          echo "The last post----end"
         '''
       }
     }
