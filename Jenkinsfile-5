@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    options {
+        timestamps()
+        parallelsAlwaysFailFast()
+    }
+    stages {
+        stage('1') {
+            steps {
+                script {
+                    step([$class: 'WsCleanup'])
+                }
+            }
+        }
+        stage('2 AND 3') {
+        steps {
+            script {
+                parallel getWrappedStages()
+            }
+        }
+        }
+        stage('4') {
+            steps {
+                script {
+                    sh "echo end"
+                }
+            }
+        }
+    }
+}
+
+def getWrappedStages() {
+    stages = [:]
+    stages["Step2.1"] = { stage('2.1') {
+        sh """
+           echo hi 2.1
+        """
+        } 
+        parallel parallel3xstages()
+    }
+    stages["Step2.p"] = { stage('2.p') {
+        sh """
+           echo hi 2.p
+        """
+        } 
+    }
+    
+    return stages
+}
+
+def parallel3xstages() {
+  stages = [:]
+    stages["Step3.1"] = { stage('3.1') {
+        sh """
+           echo hi 3.1
+        """
+        }
+    }
+
+    stages["Step3.2"] = { stage('3.2') {
+        sh """
+           echo hi 3.2
+        """
+        }
+    }
+  return stages
+}
