@@ -36,6 +36,13 @@ pipeline {
           echo "Add: 'Hau debug' into /tmp/test/data/data1.txt"
         '''
       }
+      script {
+        parallel([
+            'Test 1.1': { echo "Test 1.1"; echo  "ABCK"},
+            'Test 1.2': { echo "Test 1.2" },
+            'Test 1.3': { echo "Test 1.3" }
+        ])
+      }
       post {
         always {
           sh '''

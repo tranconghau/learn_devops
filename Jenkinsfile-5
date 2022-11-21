@@ -42,11 +42,6 @@ def getWrappedStages() {
         """
         } 
         parallel parallel3xstages()
-        post {
-            always {
-                sh "echo post232"
-            }
-        }
     }
     stages["Step2.p"] = { stage('2.p') {
         sh """
